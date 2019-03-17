@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue学习</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+        <div class="x" :class="{y:true, z: flag}">xxxxx</div>
+        <div class="x" :class="[class1,class2, {z: flag}]">aaaa</div>
+        <div style="font-size:30px;" :style="{color:'yellow', background:'pink'}">xxxxx</div>
+        <div :style="[{fontSize:'30px'},style1, style2]">vvvvvv</div>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/axios/dist/axios.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "hello",
+                class1: "x",
+                class2: 'y',
+                style1: {color:'yellow'},
+                style2:{backgroundColor:'pink'},
+                flag: true
+            },
+            watch:{
+
+            },
+            computed:{
+
+            },
+            math: {
+
+            }
+        })
+    </script>
+</body>
+</html>

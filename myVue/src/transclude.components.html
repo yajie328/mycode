@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>component组件-嵌套</title>
+<style>
+</style>
+</head>
+<body>
+<div id="app">
+    <!-- 嵌套组件 -->
+    <!-- <parent></parent> -->
+    父亲：{{money}}
+    <!-- child.$on("child-msg", things); -->
+    <child :m="money" @child-msg='sonThings'></child>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    // 如果在一个组件是用另一个组件，1.保证使用的组件的真实存在，在需要引用这个组件的实例上通过components注册这个组件，组件需要在父级模板中通过标签的形式引入
+    let parentson = {template:"<div>parentson</div>"};
+    let son = {
+        template:"<div>son<parentson></parentson></div>",
+        components:{
+            parentson
+        }
+    };
+    let parent = {
+        template:"<div>parent<son></son></div>",
+        components:{
+            son
+        }
+    };
+    let vm = new Vue({
+        data:{
+            money:400
+        },
+        methods:{
+            sonThings(val){
+                this.money = val;
+            }
+        },
+        components: {
+           child:{
+               props:{ // 对象的形式可以进行校验
+                   m: { // 校验属性的类型，如果不带：号得到的肯定时字符串类型
+                       type:[Number,String,Function, Array, Boolean,Object],
+                        default:0, //可以给m默认值，如果不传默认会调用default
+                        // required:true,
+                        validator(val){ //第一个参数是当前传递的值，返回true表示通过false就是不通过
+                            return val>=1; //自定义校验器（用的不是很多）
+                        }
+                   }
+               },
+            //  props:['m'], // this.m = 100；会在当前子组件声明一个m属性 值是父亲的
+               template:'<div>儿子{{m}}<button @click="getMoney()">要钱</button></div>',
+                methods:{
+                    getMoney(){
+                        this.$emit('child-msg', 800);  // 触发自己的自定义事件 让父亲的方法执行
+                    }
+                }
+           }
+        }
+    }).$mount('#app');
+    // 父传子 props
+    // 子传父 ：父亲绑定一些事件，儿子触发这个事件 将参数传递过去 单项数据流，父亲数据刷新 儿子就刷新 
+
+    </script>
+</body>
+</html>

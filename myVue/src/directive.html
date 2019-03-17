@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>directive</title>
+<style>
+    .del{ text-decoration:line-through; color:#ccc;}
+    .dragdiv{ z-index:100000;width:100px; height:100px; position:absolute; background:red;}
+</style>
+</head>
+<body>
+    <div id="app">
+        <button v-color="flag">button</button>
+        <div v-drag class="dragdiv">xxxx</div>
+        <div v-drag class="dragdiv">xxxx</div>
+    </div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+let vm = new Vue({
+    el: "#app",
+    data: {
+        flag: 'red'
+    },
+    directives:{
+        color(el, bindings){
+            el.style.background = bindings.value;
+        },
+        drag(el){
+            el.onmousedown = function(e){
+                var disX = e.pageX - el.offsetLeft;
+                var disY = e.pageY - el.offsetTop;
+                document.onmousemove = function(e){
+                    el.style.left = e.pageX - disX +'px';
+                    el.style.top = e.pageY - disY + 'px';
+                }
+                document.onmouseup = function(){
+                    document.onmousemove = document.onmouseup = null;
+                }
+                e.preventDefault();
+            }
+        }
+    }
+});
+    </script>
+</body>
+</html>
