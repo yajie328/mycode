@@ -1,17 +1,20 @@
-let p = new Promise(function(resolve, reject){
-    resolve('123');
+let Promise = require('./myPromise');
+let p = new Promise(function(reslove, reject){
+    // reslove('123');
+    // reject('fail');
+    // throw new Error('报错');
+    setTimeout(()=>{
+        reject('123');
+    },1000)
 });
-let p2 = p.then((data)=>{
-    console.log(data);
-},(err1)=>{
-    console.log(err1);
-    return err1;
+p.then((data)=>{
+    console.log(data,'成功');
+},(reson)=>{
+    console.log(reson,'失败')
 })
-let p3 = p2.then(data2=>{
-    console.log(data2);
-},(err2)=>{
-    console.log(err2);
-});
-p3.then(data3=>{
-    console.log(data3);
-});
+p.then((data)=>{
+    console.log(data,'成功');
+},(reson)=>{
+    console.log(reson,'失败');
+})
+
