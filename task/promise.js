@@ -2,14 +2,14 @@ function Promise(executor){
     this.status = 'pending';
     this.value = undefined;
     this.reason = undefined;
-    this.onresolveCallbacks = []; // 存放成功的异步队列
+    this.onResolveCallbacks = []; // 存放成功的异步队列
     this.onRejectedCallbacks = []; // 存放失败的异步队列
     let self = this;
     function resolve(value){
         if(self.status=='pending'){
             self.value = value;
             self.status = 'fulfilled';
-            self.onresolveCallbacks.forEach(fn=>fn());
+            self.onResolveCallbacks.forEach(fn=>fn());
         }
     }
     function reject(reason){
@@ -27,12 +27,14 @@ function Promise(executor){
         // 如果报错调用执行器的then方法即可
         reject(e);
     }
+    
 }
 function resolvePromise(promise2, x, resolve, reject){
-    if(x===promise2){
+    if(x === promise2){
         return reject(new TypeError('循环调用'));
     }
-    if(x!=null && (typeof x ==='function'|| typeof x ==='object')){
+    
+    if(x!=null && (typeof x ==='function' || typeof x ==='object')){
         let called;
         try{
             let then = x.then; // 看看这个对象有没有then方法，如果有说明有可能x是promise    {then: undefined}
@@ -52,7 +54,7 @@ function resolvePromise(promise2, x, resolve, reject){
                 resolve(x); // {then:{}} {then:123}
             }
         }catch(e){ //这个then方法 是通过ObjectDefinedProperty定义的
-            if(called) return
+            if(called) return;
             called = true; // 这个判断为了防止出错后 继续要调用成功逻辑
             reject(e);
         }
@@ -70,7 +72,7 @@ Promise.prototype.then = function(onfulfilled, onrejected){
         if(self.status === 'fulfilled'){
             setTimeout(()=>{
                 try{
-                    var x = onfulfilled(self.value);
+                    let x = onfulfilled(self.value);
                     resolvePromise(promise2, x,resolve,reject);
                 }catch(e){
                     reject(e);
@@ -80,7 +82,7 @@ Promise.prototype.then = function(onfulfilled, onrejected){
         if(self.status === 'rejected'){
             setTimeout(()=>{
                 try{
-                    var x = onrejected(self.reason);
+                    let x = onrejected(self.reason);
                     resolvePromise(promise2, x,resolve,reject);
                 }catch(e){
                     reject(e)
@@ -88,10 +90,10 @@ Promise.prototype.then = function(onfulfilled, onrejected){
             })
         }
         if(self.status === 'pending'){
-            self.onresolveCallbacks.push(function(){
+            self.onResolveCallbacks.push(function(){
                 setTimeout(()=>{
                     try{
-                        var x =  onfulfilled(self.value);
+                        let x =  onfulfilled(self.value);
                         resolvePromise(promise2, x,resolve,reject);
                     }catch(e){
                         reject(e)
@@ -101,20 +103,40 @@ Promise.prototype.then = function(onfulfilled, onrejected){
             self.onRejectedCallbacks.push(function(){
                 setTimeout(()=>{
                     try{
-                        var x = onrejected(self.reason);
+                        let x = onrejected(self.reason);
                         resolvePromise(promise2, x,resolve,reject);
                     }catch(e){
                         reject(e);
                     }
-                });
+                },0);
             });
         }
     });
     return promise2;
 }
+
+// catch 是then的简写 捕捉异常
+Promise.prototype.catch = function(errCallback){
+    return this.then(null, errCallback);
+}
+
+Promise.prototype.finally = function(callback){
+        if(this.status === 'fulfilled' || this.status === "rejected"){
+            callback();
+        }else{
+            this.onResolveCallbacks.push(callback);
+            this.onRejectedCallbacks.push(callback);
+        }
+        
+    return this;
+}
+
+
 // 测试自己写的promise是否符合promiseaplug规范
 // npm install promises-aplus-tests -g
 // promises-aplus-tests promise.js
+
+//
 Promise.deferred = function(){
     let dfd = {};
     dfd.promise = new Promise((resolve,reject)=>{
