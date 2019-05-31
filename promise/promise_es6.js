@@ -1,3 +1,4 @@
+console.log('daya-promise-se6');
 class Promise{
     constructor(executor){
         this.status = 'pending';
@@ -50,7 +51,7 @@ class Promise{
                         called = true;
                         // resolve(y);
                         // 如果返回的是一个promise, 这个promise，resolve的结果可能还是一个promise，递归解析直到这个y是一个常量为止
-                        self.reason.resolvePromise(promise, y, resolve, reject);
+                        Promise.resolvePromise(promise, y, resolve, reject);
 
                     }, r=>{
                         if(called) return;
@@ -72,6 +73,8 @@ class Promise{
     }
     // then 
     then(onfulfilled, onrejected){
+        onfulfilled = typeof onfulfilled ==='function'? onfulfilled: value=>value;
+        onrejected =  typeof onrejected ==='function'? onrejected: err=> {throw err};
         let self = this;
         // 返回新的promise 让当前的方法执行后继续then
         let promise2 = new Promise((resolve, reject)=>{
@@ -82,7 +85,7 @@ class Promise{
             setTimeout(()=>{
                 try{
                     let x =  onfulfilled(self.value); //x就是then第一个函数的返回值
-                    self.resolvePromise(promise2, x, resolve, reject); 
+                    Promise.resolvePromise(promise2, x, resolve, reject); 
                 }catch(e){
                     reject(e);
                 }
@@ -92,7 +95,7 @@ class Promise{
                 setTimeout(()=>{
                     try{
                         let x =  onrejected(self.reason);
-                        self.resolvePromise(promise2, x, resolve, reject); 
+                        Promise.resolvePromise(promise2, x, resolve, reject); 
                     }catch(e){
                         reject(e);
                     }
@@ -104,7 +107,7 @@ class Promise{
                     setTimeout(()=>{
                         try{
                             let x = onfulfilled(self.value);
-                            self.resolvePromise(promise2, x, resolve, reject); 
+                            Promise.resolvePromise(promise2, x, resolve, reject); 
                         }catch(e){
                             reject(e)
                         }
@@ -114,7 +117,7 @@ class Promise{
                     setTimeout(()=>{
                         try{
                             let x = onrejected(self.reason);
-                            self.resolvePromise(promise2, x, resolve, reject);
+                            Promise.resolvePromise(promise2, x, resolve, reject);
                         }catch(e){
                             reject(e)
                         }
@@ -123,6 +126,20 @@ class Promise{
             }
         });
         return promise2;
+    }
+
+    catch(errCallback){
+        return this.then(null, errCallback);
+    }
+
+    finally(callback){
+        if(this.status === 'fulfilled' || this.status == "rejected"){
+            callback();
+        }else{
+            this.onResolveCallbacks.push(callback);
+            this.onRejectedCallbacks.push(callback);
+        }
+        return this;
     }
 }
 Promise.deferred = function(){
@@ -134,3 +151,4 @@ Promise.deferred = function(){
     return dfd;
 };
 module.exports =  Promise;
+

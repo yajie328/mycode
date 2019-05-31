@@ -1,0 +1,19 @@
+*{margin:0; padding:0;}
+.fl{float:left;}
+.fr{float: right;}
+.wrapper{
+    width:600px;
+    margin:0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+.title{
+    text-align:center
+}
+.table{
+    width:100%;
+}
+footer button{
+    margin-right:10px;
+}

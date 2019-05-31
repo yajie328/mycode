@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+	<div id="root"></div>
+<script type="text/babel">
+	ReactDOM.render(
+		<div>
+			<h1>ejx插值表达式</h1>
+			<h1>{'hello'}</h1>
+			<h1>{1}</h1>
+			<h1>{true}</h1>
+			<h1>{null}</h1>
+			<h1>{undefined}</h1>
+			<h1>{ /* {left:100} */} </h1> /*对象不能直接输出*/
+			<h1>{[1,2,3]}</h1>
+		</div>, 
+		document.getElementById("root")
+	);
+</script>
+</body>
+</html>

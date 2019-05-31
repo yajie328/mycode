@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模态框</title>
+    <style>
+        .mask{width:100%; height:100%; position: fixed; background: rgba(0,0,0,.35)}
+        .dialog{width:400px;height:150px; background: #fff; position: fixed; top:50%; left:50%; transform:translate3d(-50%, -50%, 0)}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <modal  ref="dia">
+            <h1 slot="title">我是标题</h1>
+            <div slot="content">我是内容</div>
+            <div>lalalal</div>
+        </modal>
+        <button @click="opendia()">显示</button>
+        
+    </div>
+    <!-- 
+    // 1 slot 插槽  实现定制
+    // 默认name=default 如果没有指定名字就放到默认插槽
+    //2 this.$refs.dia.fnname() 父调用子组件的方法
+    -->
+    <template id="dialog">
+    <div class="mask" v-show="dis">
+        <div class="dialog">
+            <slot name='title'>这是默认标题</slot>
+            <slot name="content">这是默认内容</slot>
+            <slot name="default">这是一个默认插槽的</slot>
+
+            <button @click="close()">关闭</button>
+        </div>
+    </div>
+    </template>
+    <script src="../node_modules/vue/dist/vue.js" ></script>
+    <script>
+        // dilaog 是h5标签不能当作变量使用
+        let modal = {
+                props:['show'],
+                data: function(){
+                    return {
+                        dis: false
+                    }
+                },
+                template : '#dialog',
+                methods:{
+                    close(){
+                        this.dis =  false;
+                    },
+                    open(){
+                        this.dis = true;
+                    }
+                }
+        }
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                flag: false
+            },
+            methods:{
+                opendia(){ // 父组件调用子组件中的方法
+                    this.$refs.dia.open();
+                }
+            },
+            mounted(){// ref 如果放在组建是 获取的是组件的实例 并不是组件的dom元素
+                // console.log(this.$refs.dia)
+            },
+            components: {
+                modal
+            }
+        })
+    </script>
+</body>
+</html>

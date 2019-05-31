@@ -1,0 +1,11 @@
+{
+  "name": "express-code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "install": "^0.12.2"
+  }
+}

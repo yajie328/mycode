@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>router</title>
+    <style>
+    .router-link-active, .active{color:red;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- router-router 是一个全局组件，可以直接用 -->
+        <!-- router-link 路由跳转组件   默认是a标签 -->
+        <router-link to="/home" tag="button">home</router-link>
+        <router-link to="/list" tag="button">list</router-link>
+        <router-view></router-view>
+
+        <!-- <a href="#/home">home</a><a href="#/list">list</a> -->
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+    let home = {
+        template: '<div>home</div>'
+    }
+    let list = {
+        template: '<div>list</div>'
+    }
+    let routes = [ // 路由的映射表，配置路径和组件的关系
+        {path: '/home', component: home}, // 配置的关系就是页面级组件， 路径必须加/
+        {path:'/list', component:list}
+    ]
+    let router = new VueRouter({ // 引入vue-router自带的类
+        mode: 'history', // h5模式  默认是hash模式
+        linkActiveClass: 'active', // 更改激活时的样式classname
+        routes
+
+    })
+     var vm= new Vue({
+         el: '#app',
+         router
+    }) 
+    </script>
+</body>
+</html>

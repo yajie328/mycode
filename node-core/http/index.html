@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./1.css">
+</head>
+<body>
+    hello 我是大雅
+    <script>
+        // ajax xhr axios => promise fetch
+        let xhr =  new XMLHttpRequest();
+        xhr.open('PUT',"http://localhost:3000/userList", true);
+        xhr.responseType = 'json';
+        // 要带cookie
+        xhr.withCredentials = true;
+        document.cookie = 'aaa=100'; // 凭证  默认华语不支持cookie
+        xhr.setRequestHeader('token', 'ieieieiei');
+        xhr.onreadystatechange = function(){
+            if(xhr.status == 200 && xhr.readyState === 4){
+                console.log(xhr.response);
+            }
+        }
+        xhr.send();
+
+    </script>
+</body>
+</html>

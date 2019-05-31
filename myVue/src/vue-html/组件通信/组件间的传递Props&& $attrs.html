@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父传子-子传父</title>
+</head>
+<body>
+	<div id="app">
+		<my-button :info="xxx" a="1" b="2" c="3"></my-button>
+	</div>
+	<script src="../../node_modules/vue/dist/vue.js" ></script>
+	<script>
+		let Vm = new Vue({
+			el: "#app",
+			data: {
+				xxx: 'xxx'  
+			},
+			components: {
+				'my-button':  {
+					inheritAttrs: false, // 不再dom上显示传递的属性， 默认没用到的属性会显示dao上
+					props: ['info'],
+					data(){
+						return {msg: '点我啊'}
+					},
+					mounted(){
+						// $attrs 表示没有被调用的属性， 批量传递属性
+						console.log(this.$attrs) //{a: "1", b: "2", c: "3"}
+					},
+					template: `<button>{{msg}}-{{info}}- <my v-bind="$attrs"></my></button>`,
+					components: { // 孙子组件
+						'my': {
+								props: ['a','b','c'],
+								template: '<span>孙子组件{{a}}{{b}}{{c}}</span>'
+						}
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>

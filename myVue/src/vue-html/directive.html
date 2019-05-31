@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>directive</title>
+<style>
+    .del{ text-decoration:line-through; color:#ccc;}
+    .dragdiv{ z-index:100000;width:100px; height:100px; position:absolute; background:red;}
+</style>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="text" v-model="msg">
+        <input type="text" :value="msg" @input="change($event)"> -->
+        {{msg}}
+        
+        <!-- 复选框有两个值 true /false -->
+        <input type="checkbox" v-model="check">{{check}}
+
+        <!-- 多个复选框 数组 -->
+        <input type="checkbox" v-model="checks" value="1">
+        <input type="checkbox" v-model="checks" value="2">
+        <input type="checkbox" v-model="checks" value="3">
+        <input type="checkbox" v-model="checks" value="4">
+        {{checks}}
+
+        <!-- 单选框 实现radio分组 也是通过v-model -->
+        男 <input type="radio" v-model="gender" value="男">
+        女 <input type="radio" v-model="gender" value="女">
+        {{gender}}
+
+        <!-- select -->
+        <select v-model="selected" multiple>
+            <option value="111" disabled>请选择</option>
+            <option v-for="o in options" :value="o.id" :key="o.id">{{o.title}}</option>
+        </select>
+        {{selected}}
+    </div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+let vm = new Vue({
+    el: "#app",
+    data: {
+        msg: '123',
+        check:true,
+        checks:[],
+        gender: undefined,
+        selected: [],
+        options:[
+            {title:"语文", id:"1"},
+            {title:"数学", id:"2"},
+            {title:"英语", id:"3"}
+        ]
+    },
+    methods:{
+        change(e){
+            this.msg = e.target.value
+        }
+    }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>作用域插槽</title>
+</head>
+<body>
+	<div id="app">
+		<list :arr="arr" v-slot:default="{v}" >
+			<div>{{v}}</div>
+		</list>
+		<list :arr="arr" v-slot="props" >
+			<li>{{props.v}}</li>
+		</list>
+		<list :arr="arr">
+			<template slot-scope="props"> <!-- slot-scope = v-slot -->
+				<a href="#">{{props.v}} </a> 
+			</template>
+		</list>
+	</div>
+	<script src="../../node_modules/vue/dist/vue.js"></script>
+	<script>
+	 Vue.component('list',{
+		props:['arr'],
+		// 通过作用域插槽的方式 函数组件
+		template:`<ul> 
+			<slot v-for="i in arr" :v="i" q='1'></slot>    
+		</ul>`
+	})
+	let vm = new Vue({ 
+		el:'#app',
+		data:{
+			vv:'hello',
+			arr:[1,2,3,4,5]
+		}
+	});
+	</script>
+</body>
+</html>

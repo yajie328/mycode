@@ -1,0 +1,1 @@
+define("math",["num"],function(n){return{getRadom:function(){return parseInt(Math.random()*n)}}});

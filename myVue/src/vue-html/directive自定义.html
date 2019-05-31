@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>directive</title>
+<style>
+	.del{ text-decoration:line-through; color:#ccc;}
+	.dragdiv{ z-index:100000;width:100px; height:100px; position:absolute; right:0; top:0;background:red;}
+	.popWrap{width:300px; height:300px; background:green;}
+</style>
+</head>
+<body>
+	<div id="app">
+		<button v-color="color">button</button>
+		<div v-drag class="dragdiv">xxxx</div>
+		<div v-drag class="dragdiv">xxxx</div>
+<hr>
+		<button @click="show">弹框</button>
+		<div class="popWrap" v-click-outside="hide" v-show="isShow"></div>
+
+	
+
+	<hr>
+	<!-- v-focus -->
+	<input type="text" v-focus="xx" />
+</div>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+let vm = new Vue({
+	el: "#app",
+	data: {
+		color: 'red',
+		isShow: false,
+		xx: 123
+	},
+	directives:{
+		// 样式
+		color(el, bindings, c){
+			// console.log(el, bindings, c)
+			el.style.background = bindings.value;
+		},
+		// 拖拽
+		drag(el){
+			el.onmousedown = function(e){
+				var disX = e.pageX - el.offsetLeft;
+				var disY = e.pageY - el.offsetTop;
+				document.onmousemove = function(e){
+					el.style.left = e.pageX - disX +'px';
+					el.style.top = e.pageY - disY + 'px';
+				}
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+				}
+				e.preventDefault();
+			}
+		},
+		// 点击框外面关闭本框
+		'click-outside'(el,bindings, vnode){
+			// console.log(el, bindings, vnode)
+			// document.addEventListener('mousedown', (e)=>{
+			// 	if(!el.contains(e.target)){
+			// 		vnode.context[bindings.expression]();
+			// 	}
+			// })
+
+		},
+		// v-focus 自动获取焦点
+		focus:{ // 默认调用的方法是bind和update
+			bind(el){
+				console.log('绑定到页面上执行', el);
+				// Vue.nextTick(function(){
+				// 	el.focus();
+				// })
+			},
+			inserted(el){
+				console.log('dom插入到页面后执行');
+				el.focus();
+			},
+			
+			update(el){  //v-focuse依赖的xx值变了会触发update
+				console.log('更新时执行', el);
+			}
+		}
+
+	},
+	methods:{
+		show(){
+			this.isShow = true;
+		},
+		hide($event){
+			this.isShow = false;
+		}
+	}
+});
+	</script>
+</body>
+</html>

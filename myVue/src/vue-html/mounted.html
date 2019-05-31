@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>vue实例上的方法</title>
+<style>
+</style>
+</head>
+<body>
+    <div id="app">
+        <!-- 固定属性名ref可以获取到元素 -->
+       <p ref="myp">{{msg}}</p>
+       <p ref="myp">{{msg}}</p>
+       <div v-for="item in arr" ref="mydiv">item</div>
+    </div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    // this.$data vm上的数据
+    // this.$watch() 监控
+    // this.$el 当前el元素
+    // this.$set() 后加的属性实现响应式变化
+    //this.options vm上的所有属性
+    // this.$nextTick() 异步方法 等待do'm渲染完成后来获取dom
+    // this.$refs  所有属性名为refs的集合
+let vm = new Vue({ //根实例 初始化时会调用很多方法（钩子函数）
+    el: "#app",
+    data: {
+        msg: 'hello',
+        arr:[1,2,3]
+    },
+    mounted(){
+        // 如果dom不是v-for循环出来的，只能获取一个
+        console.log(this.$refs.myp);
+        // 获取属性
+        console.log(this.$options);
+        this.arr = [1,2,3,4]; 
+        //想获取vm可以使用nextTick
+        this.$nextTick(()=>{ // 异步方法，等待同步走完成后来获取vm
+            console.log(vm);
+            // 如果数据变化后获取真实dom中的内容，需要等待dom渲染完毕后去获取，所有的dom操作 最好放在nextTick中
+            // 外面调用时3个，实际已经变成4个， 说明dom 渲染是异步的，
+            console.log(this.$refs.mydiv); 
+        })
+    }
+   
+}); 
+    </script>
+</body>
+</html>

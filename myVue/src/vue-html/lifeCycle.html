@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>vue生命周期</title>
+<style>
+</style>
+</head>
+<body>
+    <div id="app">
+        {{a}}
+    </div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+//生命周期： beforeCreate 出生前 created 出生后
+//          beforeMount 挂载前，正在编译。。。还没到页面上 mounted 挂载后页面就渲染出来了
+//          beforeUpdate 数据更新之前  update 更新之后
+//          beforeDestory 死忙前 destoryed 后
+// beforeCreate 创建之前会初始化一些事件和生命周期函数(init),一般不会，都是初始化一些内部的方法，然后把数据注入
+// created 创建后就可以拿到上面的数据了
+// beforeMount 没啥实际意义
+let vm = new Vue({ //根实例 初始化时会调用很多方法（钩子函数）
+    // el: "#app",
+    beforeCreate(){ //1. 此方法用不到
+        // debugger;
+    },
+    data: {
+        a: 1
+    },
+    created(){  //2. 获取数据ajax, 初始化操作
+        // debugger;
+    },
+    beforeMount(){  
+        // alert(1)
+    },
+    // template: '<div>{{a}}</div>', //4. 如果有template属性会用模板替换掉外部html，只要有此属性app中的html就没意义了；注：模板只包能有一个根元素，不能时文本节点
+    mounted(){}, //5. 真实dom渲染完了，可以操作dom了
+    beforeUpdate(){ //6. 当页面依赖的数据有变化时, 更新之前，一般用watch来替换
+        alert('更新前');
+    },
+    updated(){ //7
+        alert('更新后')
+    },
+    beforeDestroy(){ // 当vm.$destory()时触发 这时会移除监听者，子组件，事件的监听
+        // 可以清除定时器 或者清除事件绑定
+        alert('销毁前');
+    },
+    destroyed(){ // 销毁后
+        alert('销毁后');
+    }
+}); 
+vm.$mount("#app"); // 3.要保证有编译的元素 
+vm.$destroy(); 
+    </script>
+</body>
+</html>

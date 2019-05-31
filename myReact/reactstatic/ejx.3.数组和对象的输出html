@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+	<div id="root"></div>
+<script type="text/babel">
+	let users = ['张三','李四','赵五','王六'];
+	let obj = {let:0, top:200};
+
+	function getUsers(users){
+		return users.map((item, index)=>{
+			return <li key={index}>{item}</li>
+		})
+	}
+	ReactDOM.render(
+		<div>
+			<ul>
+			{getUsers(users)}
+			</ul>
+			<ul>
+			{
+				Object.keys(obj).map(key=>{
+					return <li key="key">{key}：{obj[key]}</li>
+				})
+			}
+			</ul>
+		</div>, 
+		document.getElementById("root")
+	);
+</script>
+</body>
+</html>

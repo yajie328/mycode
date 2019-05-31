@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父传子-子传父</title>
+</head>
+<body>
+    <div id="app">
+        父亲： {{money}}
+        <!-- <child :m='money'  @child-msg="things"></child> -->
+        <child :m="money" @update:m="val=>this.money=val"></child>
+        <!-- :m:sync  是上面的语法糖 -->
+        <child :m.sync='money'></child> 
+    </div>
+    <script src="../node_modules/vue/dist/vue.js" ></script>
+    <script>
+        // 符串子：
+        // 子传父
+
+        let vm = new Vue({
+            el:'#app',
+            data:{money:400},
+            methods: {
+                things(data){
+                    this.money =  data;
+                }
+            },
+            components: {
+                child: {
+                    props: ["m"],
+                    data: function(){
+                        return {}
+                    },
+                    template: "<div>儿子{{m}} <button @click='getMoney()'>要钱</button></div>",
+                    methods:{
+                        getMoney(){
+                            // this.$emit('child-msg', 800);
+                            this.$emit('update:m',800)
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

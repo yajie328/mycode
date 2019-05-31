@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <a href="#/a">aa</a>
+    <a href="#/b">bb</a>
+    <div id="root"></div>
+    <script>
+        window.addEventListener('hashchange',(event)=>{
+            console.log(event.newURL)
+            root.innerHTML = `当前的路径是：${window.location.hash.slice(1)}`;
+        })
+        // history .back() .go(-1) 
+        // .pushState(新的状态， 新的标题，新的路径)
+        // .pushState({name:'新路径','我是标题','/newpath' })
+    </script>
+</body>
+</html>

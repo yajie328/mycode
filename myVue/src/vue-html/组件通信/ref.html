@@ -1,0 +1,54 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<!-- ref 
+		dom上就是一个dom  
+		给v-for出来的就是数组，
+		给组件上出来的就是组件的实例
+   -->
+	
+	<div id="app">
+		<!-- <div ref="div">div</div>
+		<div ref="div2" v-for="i in 3">div2</div> -->
+		<parent ref="parent">
+			<div ref="div3">ddd</div>
+			<child aa="child"></child>
+		</parent>
+	</div>
+	<script src="../../../node_modules/vue/dist/vue.js"></script>
+	<script>
+	Vue.component("parent",{
+		data(){
+			return {
+				isShow: false
+			}
+		},
+		mounted(){
+			console.log(this.$parent.$refs);
+		},
+		template: `<div ref="parent"><span>parent<slot></slot></span></div>`
+	})
+	Vue.component("child",{
+		mounted(){
+			// console.log(1)
+			console.log(this.$parent)
+			console.log(this.$refs.child)
+		},
+		template: `<div ref="child">child</div>`
+	})
+	 var vm= new Vue({
+		 el: '#app',
+		 mounted(){
+			// console.log(this.$refs.div);
+			// console.log(this.$refs.div2);
+			// console.log(this.$refs.parent);
+			// console.log(this.$refs.child)
+		 }
+	}) 
+	</script>
+</body>
+</html>

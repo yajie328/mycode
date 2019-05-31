@@ -1,0 +1,67 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>router 循环嵌套 路由参数 watch $router 去请求ajax</title>
+    <style>
+    .active{color:red;}
+    </style>
+</head>
+<body>
+    <div id="app">
+                <!-- to="/home" -->
+        <router-link :to="{path: '/home'}" tag="button">home</router-link>
+        <router-link :to="{path: '/list'}" tag="button">list</router-link>
+        <router-view></router-view>
+    </div>
+    <template id="list">
+        <div>list
+            <!-- 如果用对象作为to的属性，并且使用了参数，必须给路由添加name属性，同行name跳转 -->
+            <router-link :to="{name:'pro', params:{num:'1'}}">article1</router-link>
+            <router-link to="/list/detail/2">article2</router-link>
+            <router-link to="/list/detail/3">article3</router-link>
+            <router-link to="/list/detail/4">article4</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script src="../../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+    let home = {
+        template: '<div>home</div>'
+    }
+    let list = {
+        template: '#list'
+    }
+    let err = {template: '<div>404 not Fount</div>'}
+    let article = {
+            template:'<div>article{{$route.params.num}}</div>',
+            watch:{
+                $route(){ // 路径参数发生变化 根据参数变化来发送ajax
+                    console.log('发送ajax')
+                }
+            }
+        }
+    let routes = [
+        {path: "",component:home},
+        {path: '/home', component: home},
+        {
+            path:'/list', 
+            component:list,
+            children: [
+                {path:'detail/:num', component:article, name:'pro'}
+        ]},
+        {path:'/404', component:err},
+        {path:'*', redirect:'/404'}
+    ]
+    let router = new VueRouter({
+        linkActiveClass: 'active',
+        routes
+    })
+     var vm= new Vue({
+         el: '#app',
+         router // 每个组件都会有一个叫$router的属性（有r的存方法） 还有一个叫$route的属性（存属性）
+    }) 
+    </script>
+</body>
+</html>

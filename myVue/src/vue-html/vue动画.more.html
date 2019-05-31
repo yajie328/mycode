@@ -1,0 +1,62 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>动画</title>
+	<link rel="stylesheet" href="../../node_modules/animate.css/animate.css">
+	<style>
+	.box{width:200px; height:200px;  background:red}
+	
+	/* 3) 引入css动画库, 给transition添加属性name=bounce  或者直接在transition属性上指定class*/
+	.bounce-enter-active{
+		animation: bounceIn 1s ease-in;
+	}
+	.bounce-leave-active{
+		animation: bounceOut 1s ease-out;
+	}
+	</style>
+	
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="filter">
+		<transition-group 
+			enter-active-class="bounceIn"
+			leave-active-class="bounceOut"
+		>
+			<div class="box animated" v-if="isShow" v-for="(item, index) in computedList" :key="item.title">
+				{{item.title}}
+			</div>
+		</transition-group>
+	</div>
+	<script src="../../node_modules/vue/dist/vue.js"></script>
+	<script>
+
+	 var vm= new Vue({
+		 el: '#app',
+		 data:{
+			 isShow: true,
+			 filter:'',
+			 list:[
+				 {title: '标题1'},
+				 {title: '标题2'},
+				 {title: '标题23'},
+				 {title: '标题4'}
+			 ]
+		 },
+		 computed:{
+			 computedList(){
+				 if(this.filter){
+					 return this.list.filter((item)=>{
+						return item.title.includes(this.filter)
+					 })
+				 }else{
+					 return [];
+				 }
+			 }
+		 }
+
+	}) 
+	</script>
+</body>
+</html>

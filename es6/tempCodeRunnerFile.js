@@ -1,22 +1,17 @@
-Array.prototype.reduce = function(callback,prev){
-    for(let i=0; i<this.length; i++){
-        // if(prev){
-        //     prev =  callback(prev, this[i], i, this);
-        // }else{ // 如果没定义， prev = this[0];
-        //     prev = callback(this[i],this[i+1], i+1, this);
-        //     i++;
-        // }
-        if(prev == undefined && i == 0){
-            prev = this[0];
-            i++;
-        }
-        prev = callback(prev, this[i], i, this);
-           
-    }
-    return prev;
-};
+function Animal(name){ 
+    // 实例上的属性
+    this.name= name;
+    this.arr = [1,2,3];
+    this.type = '动物';
+}
+// 公有属性
+Animal.prototype.address = {'location': '山里'};
 
-let a = [1,2,3].reduce((prev, cur)=>{
-    return prev+cur;
-},100);
-console.log(a);
+let a1 = new Animal('猴子');
+let a2 = new Animal('小鸡');
+console.log(a1.arr === a2.arr); // false 实例上的属性
+console.log(a1.address === a2.address); // true 共有属性
+ // 每个实例都有一个__proto__ 指向所属类的原型
+console.log(a1.__proto__ === a2.__proto__);  //true
+console.log(a1.constructor === a2.constructor); // true
+console.log(a1.constructor);

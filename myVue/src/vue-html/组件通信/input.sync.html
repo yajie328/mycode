@@ -1,0 +1,43 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<!-- 如果属性的名字叫a 对应的方法叫 upadta:a  => a.sync -->
+		<my-input :value="value" @update:value="change"></my-input>
+		<my-input :value="value" @update:value="val=>value=val"></my-input>
+		<my-input :value.sync="value"></my-input>
+		<!-- :value + @input v-model -->
+		<my-input :value="value" @input="val=>value=val"></my-input>
+		<my-input v-model= "value"></my-input>
+	</div>
+	<script src="../../../node_modules/vue/dist/vue.js"></script>
+	<script>
+	Vue.component('my-input', {
+		// inheritAttrs: false,
+		props:['value'],
+		template:`<input type="text" :value="value" @input="change"/>`,
+		methods:{
+			change(e){
+				this.$emit("update:value", e.target.value);
+				this.$emit("input", e.target.value);
+			}
+		}
+	})
+	 var vm= new Vue({
+		 el: '#app',
+		 data(){
+			 return {value: 'hellos'}
+		 },
+		 methods:{
+			 change(val){
+				this.value = val;
+			 }
+		 }
+	}) 
+	</script>
+</body>
+</html>

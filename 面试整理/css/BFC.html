@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    html *{margin:0; padding:0}
+    </style>
+</head>
+<body>
+    <!-- 1.父子元素边距重叠 -->
+<section id="sec">
+    <style>
+    #sec{background:red; overflow: hidden;}
+    .child{
+        height:100px;
+        margin-top:10px;
+        background:yellow;
+    }
+    </style>
+    <article class="child">child</article>
+</section>
+
+<!-- 2.兄弟元素边距重叠，取边距最大的 -->
+<section id="margin">
+    <style>
+    #margin{
+        background:pink;
+        overflow:hidden;
+    }
+    #margin  p{
+        margin:5px auto 25px;
+        background:red;
+    }
+    </style>
+    <p>1</p>
+    <div style="overflow: hidden"></div><p>2</p></div>
+    <p>3</p>
+</section>
+
+<!--3. 比如两栏用浮动布局，左菜父动，右自适应，当右边内容高度大于左侧栏以后下一行会到左边那一栏   
+    给右边内容增加一个父容器并创建BFC
+-->
+<section id="layout">
+    <style>
+    #layout{
+        background:red;
+        margin-top:100px;
+    }
+    #layout .left{float:left; width:100px; height:100px; background:pink;}
+    #layout .right{height:110px; background:blue;}
+    </style>
+    <div class="left"></div>
+    <div style="overflow:auto;"><div class="right"></div><div>
+</section>
+
+<!-- BFC子元素是float也会参与高度计算  清除浮动 -->
+<section id="float">
+    <style>
+    #float{
+        background:red;
+        overflow: auto;
+        /* float:left; */
+    }
+    #float .float{
+        float:left; 
+        font-size:30px;
+        }
+    </style>
+    <div class="float">我是浮动元素</div>
+</section>
+
+<!-- 空元素上下margin重叠 -->
+<div class="empty" id="empty"></div>
+<style>
+    .empty{overflow:auto;margin-top:50px;margin-bottom:50px; background:red;}
+</style>
+<div style="background:red;" id="test">test</div>
+</body>
+</html>

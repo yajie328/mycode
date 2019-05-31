@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>router2</title>
+    <style>
+    .active{color:red;}
+    </style>
+</head>
+<body>
+    <div id="app">
+                <!-- to="/home" -->
+        <router-link :to="{path: '/home'}" tag="button">home</router-link>
+        <router-link :to="{path: '/list'}" tag="button">list</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+    let home = {
+        template: '<div>home<button @click="tolist">去列表</button></div>',
+        methods:{
+            tolist(){
+                // this.$router.push('/list'); // 强制跳转
+                this.$router.replace('/list'); // 替换当前的路径
+            }
+        }
+    }
+    let list = {
+        template: '<div>list<button @click="back">返回</button></div>',
+        methods:{
+            back(){
+                this.$router.go(-1); // 返回上一级
+            }
+        }
+    }
+    let err = {template: '<div>404 not Fount</div>'}
+    let routes = [
+        {path:'', component:home}, // 默认路由
+        {path: '/home', component: home},
+        {path:'/list', component:list},
+        {path:'/404', component: err},
+        // {path:"*", component: err} // 这个地方路径不会变 知识切换了组件而已
+        {path:'*', redirect:'/404'} // 路径变，组件也要切换404的时候
+    ]
+    let router = new VueRouter({
+        linkActiveClass: 'active',
+        routes
+    })
+     var vm= new Vue({
+         el: '#app',
+         router // 每个组件都会有一个叫$router的属性（有r的存方法） 还有一个叫$route的属性（存属性）
+    }) 
+    </script>
+</body>
+</html>

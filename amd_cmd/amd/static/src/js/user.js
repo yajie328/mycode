@@ -1,0 +1,6 @@
+
+define([],function(){
+    return [
+        {name:'daya', age:18}
+    ]
+})

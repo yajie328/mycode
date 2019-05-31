@@ -1,0 +1,13 @@
+{
+  "name": "koa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "koa-route": "^3.2.0"
+  },
+  "devDependencies": {
+    "koa-better-body": "^3.0.4",
+    "koa-router": "^7.4.0"
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父传子-子传父</title>
+</head>
+<body>
+	<div id="app">
+		<my-button :info="xxx" a="1" b="2" c="3" @click="show" @mouseleave="mouseleave"></my-button>
+	</div>
+	<script src="../../node_modules/vue/dist/vue.js" ></script>
+	<script>
+		
+		 Vue.component('my-button',{
+			mounted(){
+				console.log(this.$attrs); // {info: "xxx", a: "1", b: "2", c: "3"}
+				console.log(this.$listeners) // {click: xxx}
+			},
+			// this.$attrs (v-bind) this.$listeners (v-on)
+			// 1. 把接受来的事件逐个传入
+			// template:`<div><button @click="$listeners.click" @mouseleave="$listeners.mouseleave">点我啊</button></div>`
+			// 2. 把接收来的事件整体传入
+			// template:`<div><button v-on="$listeners">点我啊</button></div>`, 
+			// 3. $emit 触发自己的事件
+            template:`<div><button @click="$emit('click')" @mouseleave="$emit('mouseleave')">点我啊</button></div>`, // 触发自己身上的事件
+
+        })
+		let Vm = new Vue({
+			el: "#app",
+			data: {
+				xxx: 'xxx'  
+			},
+			
+			methods:{
+				show(){
+					alert('click');
+				},
+				mouseleave(){
+					alert('leave')
+				}
+			}
+		})
+	</script>
+</body>
+</html>

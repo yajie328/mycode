@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>
+	<script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.js"></script>
+	<script src="js/data.js"></script>
+<style>
+.panel{border:1px solid #000; width:50%;}
+.listWrap{height:0; overflow:hidden; transition: .5s}
+.title{
+	margin:0; padding:10px;  background:#ccc;
+}
+.vip{color:red;}
+</style>
+<body>
+	<div id="root"></div>
+<script type="text/babel">
+	class Panel extends React.Component {
+		constructor(){
+			super(...arguments);
+			this.state = {
+				showList:[true, false, false]
+			}
+			this.changeList = this.changeList.bind(this);
+		}
+		
+		changeList(i){
+			//需要第几个显示出来
+			let showList = this.state.showList.map((item,index)=>{
+				if(i==index){
+					return true;
+				}else{
+					return false;
+				}
+			})
+			this.setState({showList})
+		}
+		render(){
+			return (
+				<div className="panel">
+					{
+						Object.keys(this.props.data).map((item,index, array)=>{
+							return (
+								<Group 
+									data={this.props.data[item]} 
+									key={index} 
+									show={this.state.showList[index]}
+									onChange={this.changeList}
+									index={index}
+								/>)
+						})
+					}
+				</div>
+			)
+		}
+	}
+	class Group extends React.Component{
+		constructor(){
+			super(...arguments);
+			this.state = {show: this.props.show}
+		}
+		showList(show){
+			let list = this.refs.list;
+			if(show){
+				list.style.height = list.scrollHeight +'px'
+			}else{
+				list.style.height = 0;
+			}
+		}
+		componentDidMount(){ // 组件挂载完成
+			this.showList(this.state.show);
+		}
+		shouldComponentUpdate(nextProps, nextState){
+			if(this.state.show != nextState.show){
+				this.showList(nextState.show);
+				return true;
+			}
+			
+			if(this.state.show != nextProps.show){
+				this.setState({show: nextProps.show})
+				return true;
+			}
+			
+			
+			return false;
+			
+		}
+		changeList(e){ 
+			let show = !this.state.show;
+			this.setState({show});
+
+			// 子组件调用父组件的方法 
+			if(show){
+				this.props.onChange(this.props.index);
+			}
+		}
+		render(){
+			console.log('group render')
+			return (
+				<div className="group">
+					<h2 className="title" onClick={this.changeList.bind(this)}>{this.props.data.name}</h2>
+					<div className="listWrap" ref="list">
+						<List data={this.props.data.list}/>
+					</div>
+				</div>
+			)
+		}
+	}
+
+	class List extends React.Component{
+		
+		render(){
+			return(
+				<ul className="list">
+					{
+						this.props.data.map((item, index, arr)=>{
+							return (
+								<li key={index}>
+									<p className={item.vip? 'vip': ''}>{item.name}</p>
+									<div className="message">{item.message}</div>
+								</li>
+							)
+						})
+					}
+				</ul>
+			)
+		}
+	}
+	ReactDOM.render(
+		<Panel data={datalist} />,document.getElementById("root")
+	);
+</script>
+</body>
+</html>

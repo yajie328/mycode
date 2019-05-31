@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .div{display:-webkit-box;  width:600px; height:600px;  -webkit-box-direction:reverse; border:10px solid #000;}
+    .div div{-webkit-box-flex:1; background:red; margin:5px; font-size:50px; text-align:center; color:#fff;}
+    .div div:nth-child(1){-webkit-box-flex:2;}
+    .div div:nth-child(2){  -webkit-box-flex:2;}
+    /**
+    父级的style：
+        当父级设置 diaplay:box后 子元素就不是块级元素了,只能说是个inline-block; margin:0 auto 是无效的
+        当box-orient: horiztotal 默认值 子元素默认水平排列，高度撑满容器
+        当box-orient:vertical 子元素垂直居中， 宽度是撑满容器的
+        box-direction: normal/ vertical; 元素位置反转
+
+    子集的style：
+    box-ordinal-group: 3 指定子元素在哪个位置
+    box-flex:1; 占父级的几份；  2表示占总分数的2份,子元素的尺寸 = 父盒子尺寸 * 当前子集box-flex值/ 所以子集box-flex值的总和
+    
+
+        
+    */
+    </style>
+</head>
+<body>
+    <div class="div">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      <!--   <div>4</div>
+        <div>5</div> -->
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-// let Promise = require('./promise');
+let Promise = require('./promise_es6');
 let fs = require('fs');
 // 1.
 /* function read(url){
@@ -123,6 +123,7 @@ var p2 = p.then(data=>{
     console.log(1)
 });
 console.log(2);  */
+
 //3 2 1
 // let Promise = require('./myPromise');
 let p = new Promise((resolve,reject)=>{
@@ -136,7 +137,7 @@ let p = new Promise((resolve,reject)=>{
     })
 }).catch((data)=>{
     console.log(data);
-    return 'actch';
+    return 'catch';
 }).finally(function(){
     console.log('finally1');
 }).then(data=>{

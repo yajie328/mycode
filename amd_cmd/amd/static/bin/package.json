@@ -1,0 +1,14 @@
+{
+  "name": "bin",
+  "version": "0.0.1",
+  "description": "build requirejs package",
+  "main": "app.build.js",
+  "scripts": {
+    "cssbuild": "node r.js -o cssIn=../src/css/color.css out=../dist/css/color.css optimizeCss=standard",
+    "build": "node r.js -o app.build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Daya",
+  "license": "ISC"
+}

@@ -1,0 +1,78 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>动画</title>
+	<link rel="stylesheet" href="../../node_modules/animate.css/animate.css">
+	<style>
+	.box{width:200px; height:200px;  background:red}
+	/* 1) 默认class */
+	/* .v-enter,
+	.v-leave-to{
+		opacity:0;
+	}
+	.v-enter-active,
+	.v-leave-active{
+		transition:opacity 1s linear
+	} */
+	/* 默认当前状态， 进入后就移除了，可以不加 */
+	/* .v-enter-to{ 
+		opacity:1
+	} */
+	/* 默认当前状态， 可以不加 */
+	/* .v-leave{
+		opacity: 1
+	} */
+	
+
+	/* 2)  自定义class  transition 的 name=slide-fade    */
+	/* .slide-fade-enter-active{
+		transition:all 1s ease;
+	}
+	.slide-fade-leave-active{
+		transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+	}
+	.slide-fade-enter, .slide-fade-leave-to{
+		transform: translateX(10px);
+		opacity:0;
+	} */
+
+	/* 3) 引入css动画库, 给transition添加属性name=bounce  或者直接在transition属性上指定class*/
+	.bounce-enter-active{
+		animation: bounceIn 1s ease-in;
+	}
+	.bounce-leave-active{
+		animation: bounceOut 1s ease-out;
+	}
+	</style>
+	
+</head>
+<body>
+	<div id="app">
+		<button @click="isShow = !isShow">点击</button>
+		<!-- 3.1) 添加样式 -->
+		<!-- <transition name="bounce"> -->
+		<!-- 3.2) 直接指定 -->
+		<transition 
+			enter-active-class="bounceIn"
+			leave-active-class="bounceOut"
+		>
+			<div class="box animated" v-show="isShow">
+				content
+			</div>
+		</transition>
+	</div>
+	<script src="../../node_modules/vue/dist/vue.js"></script>
+	<script>
+// 常见的触发动画的操作 v-if v-show v-for 路由切换
+// css添加动画 animation transition    js添加动画  自带的钩子  使用库velocity.js
+
+	 var vm= new Vue({
+		 el: '#app',
+		 data:{
+			 isShow: true
+		 }
+	}) 
+	</script>
+</body>
+</html>

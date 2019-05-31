@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>history</title>
+</head>
+<body>
+	<button onclick="push('/a')">/a</button>
+	<button onclick="push('/b')">/b</button>
+	<button onclick="push('/c')">/c</button>
+	<div id="root" style="border:1px solid red; height:200px;"></div>
+	<script>
+		window.onpopstate = function(event){
+			console.log(event);
+			root.innerHTML = event.state.to;
+		}
+		// 浏览器默认不支持这个
+		window.onpushstate =  function(state, title, url){
+			root.innerHTML =  state.to || url;
+		}
+
+		// 改写pushState, 使其能够触发onpushstate
+		let oldPush = window.history.pushState;
+		window.history.pushState = function(state, title, url){
+			oldPush.call(window.history, state,title, url);
+			window.onpushstate(state, title, url);
+		}
+		function push(to){
+			window.history.pushState({to}, null,to)
+		}
+	</script>
+</body>
+</html>

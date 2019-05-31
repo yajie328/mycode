@@ -1,7 +1,8 @@
-let p = new Promise((resolve,reject)=>{
-    reject(123)
-}).then(data=>{
-    console.log(1)
-}).catch((data)=>{
-    console.log()
-})
+Promise.deferred = function(){
+//     let dfd = {};
+//     dfd.promise = new Promise((resolve,reject)=>{
+//         dfd.resolve = resolve;
+//         dfd.reject = reject;
+//     });
+//     return dfd;
+// };

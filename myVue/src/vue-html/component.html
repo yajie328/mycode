@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>component组件-全局和局部组件</title>
+<style>
+</style>
+</head>
+<body>
+<div id="app">
+    <my-beautiful></my-beautiful>
+    <component1></component1>
+    <component2></component2>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    // 1.组建名不要带有大写 多个单词用-
+    // 2.只要组件和定义名字相同时可以的(首字母大写可以)
+    // 3. html采用短横线隔开  js中转驼峰也是可以的
+    // 全局组件
+    Vue.component('my-beautiful',{
+        template: '<div>{{msg}}</div>',
+        data(){ // 组件中的数据必须时函数类型 返回一个实例作为组件的数据
+            return {msg:'我是大雅！'}
+        }
+    });
+
+    // 局部组件三部曲
+    // 1.创建这个组件 2. 注册这个组件 3.引用这个组件
+    // 组件是相互独立的 不能直接跨作用域 实例也是一个组件, 组件中拥有生命周期函数
+    let obj = {msg:'大雅'} //如果组件公用了数据 会导致同时更新（独立性）
+    // 子组件不能直接使用父组件的数据(组件间的数据交互)
+    // 组件理论上可以无限嵌套
+    let component1 = {
+       template:"<div @click='fn'>组件1{{msg}}</div>",
+       data(){
+           return obj;
+       },
+       methods:{
+           fn(){
+               this.msg = 'hello'; //this指向当前组件
+           }
+       }
+    };
+    let component2 = {
+       template:"<div>组件2{{msg}}</div>",
+       data(){
+           return obj;
+       }
+    };
+
+    let parent = {template:"<div>parent</div>"};
+    let son = {template:"<div>son</div>"};
+    let parentson = {template:"<div>parentson</div>"};
+    let vm = new Vue({
+        //局部组件
+        components: {
+            component1,  // es6名字一样写一个
+            component2
+        }
+    }).$mount('#app');
+
+
+    </script>
+</body>
+</html>

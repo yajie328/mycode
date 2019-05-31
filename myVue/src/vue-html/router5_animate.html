@@ -1,0 +1,41 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>router 循环嵌套 路由参数 watch $router 去请求ajax</title>
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.css">
+</head>
+<body>
+    <div id="app">
+        <router-link :to="{path: '/home'}" tag="button">home</router-link>
+        <router-link :to="{path: '/list'}" tag="button">list</router-link>
+            <!-- mode="out-in" 动画的模式 -->
+        <transition enter-active-class="animated fadeIn" out-active-class="animated fadeOut">
+            <keep-alive>
+                <router-view style="position: absolute; left:0; top:0; width:100%;"></router-view>
+            </keep-alive>
+        </transition>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+    let home = {
+        template: '<div style="background:red">home</div>'
+    }
+    let list = {
+        template: '<div style="background:green">list</div>'
+    }
+    let routes = [
+        {path: "/home",component:home},
+        {path: '/list', component: list}
+    ]
+    let router = new VueRouter({
+        routes
+    })
+     var vm= new Vue({
+         el: '#app',
+         router // 每个组件都会有一个叫$router的属性（有r的存方法） 还有一个叫$route的属性（存属性）
+    }) 
+    </script>
+</body>
+</html>
