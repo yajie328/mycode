@@ -19,6 +19,7 @@
                   <el-menu-item index="/profile">个人中心</el-menu-item>
                   <el-menu-item index="/user">用户页面</el-menu-item>
                   <el-menu-item index="/tree">目录树</el-menu-item>
+                  <el-menu-item index="/store">redux应用</el-menu-item>
                 </el-menu>
                 
             </el-col>
@@ -38,6 +39,7 @@
           </transition>
 
           <router-view name="logo"></router-view>
+          
         </el-main>
         <el-footer>footer</el-footer>
   </el-container>
@@ -55,12 +57,14 @@
 </div>
 </template>
 <script>
+
 export default {
   data(){
     return {
         activeMenu: null
     }
   },
+  
     mounted(){
       if(this.$route.matched.length){
          this.setActive();

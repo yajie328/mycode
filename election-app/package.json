@@ -1,8 +1,8 @@
 {
   "name": "first-electron-app",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "study election",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "start": "electron .",
     "hot": ".\\node_modules\\.bin\\gulp watch:server"

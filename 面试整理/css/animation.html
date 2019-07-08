@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>最典型的动画</title>
+</head>
+<body>
+	<style>
+		*{padding:0; margin:0;}
+		.black{width:600px; height:200px;margin:20px auto;}
+		.black:nth-of-type(1) {
+			background: red;
+		}
+		.black:nth-of-type(2){
+			background:green;
+		}
+		@keyframes fadeIn{
+			from{
+				transform: translateY(100px);
+				opacity: 0;
+			}
+			to{
+				transform: translateY(0);
+				opacity:1;
+			}
+		}
+		.fadeIn{
+			transform: translateY(100px);
+			opacity:0;
+			animation: fadeIn 1s;
+			animation-fill-mode: both
+		}
+		.fadeInDelay{
+			animation-delay:1s;
+		}
+		@keyframes rolling{
+			from{
+				background-position:0;
+			}
+			to{
+				background-position:30px;
+			}
+		}
+		.progress{
+			display: none;
+			width:280px;
+			height:15px;
+			position:absolute;
+			left:50%;
+			margin-left:-140px;
+			border-radius:5px;
+			box-shadow: 0 0 8px rgba(0,0,0, .3);
+			background:red;
+			background:linear-gradient(135deg, red 0%, red 33%, yellow 33%, yellow 66%, red 66%, red 100%);
+			background-size:30px;
+			animation:rolling .6s linear infinite;
+		}
+		.show{
+			display:block;
+		}
+	</style>
+	<header>
+		<nav><a class="loginbtn" style="float:right;">登录</a></nav>
+	</header>
+	<section>
+		<div class="black fadeIn">
+			123
+		</div>
+		<div class="black fadeIn">
+			456
+		</div>
+	</section>
+	<div class="progress"></div>
+	<section class="dialogWrap">
+		<style>
+			.dialogWrap{
+				display:none;
+				position:fixed;
+				left:0;
+				top:0;
+				width:100%;
+				height:100%;
+				perspective: 500px;
+			}
+			.dialogWrap.show{
+				display:block;
+			}
+			.dialogWrap .mask{
+				width:100%;
+				height:100%;
+				background:rgba(0,0,0,.3)
+			}
+			@keyframes slidein{
+				from{
+					transform: translate(-50%, -50%) rotateX(-90deg)
+				}
+				80%{
+					transform: translate(-50%, -50%) rotateX(10deg)
+				}
+				to{
+					transform: translate(-50%, -50%) rotateX(0deg)
+				}
+			}
+			.dialogWrap .dialog{
+				position:absolute;
+				left:50%;
+				top:50%;
+				width:500px;
+				height:300px;
+				transform-style: preserve-3d;
+				transform: translate(-50%, -50%);
+				transform-origin: 50% 50%;
+				
+				background:#fff;
+			}
+			.dialogWrap.show .dialog{
+				animation: slidein .4s;
+				animation-fill-mode:forwards;
+			}
+		</style>
+		<div class="mask"></div>
+		<div class="dialog">
+			登录
+			<button class="cancel">取消</button>
+		</div>
+	</section>
+	<script defer>
+		function showProgress(){
+			document.querySelector('.progress').classList.add('show');
+		}
+		function hideProgress(){
+			document.querySelector('.progress').classList.remove('show');
+		}
+		document.addEventListener("DOMContentLoaded", function(event) {
+			console.log("DOM fully loaded and parsed");
+			document.querySelector('.loginbtn').addEventListener('click',(event)=>{
+				console.log(1)
+				showProgress();
+				setTimeout(()=>{
+					hideProgress();
+					document.querySelector('.dialogWrap').classList.add('show');
+				},1000);
+			},false)
+			document.querySelector('.cancel').addEventListener('click',(event)=>{
+				document.querySelector('.dialogWrap').classList.remove('show');
+			})
+		});
+	</script>
+
+</body>
+</html>

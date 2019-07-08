@@ -1,16 +1,17 @@
 
 const client = require('electron-connect').client;
 const { app, BrowserWindow, Menu  } = require('electron');
+// const {fn1} = require('./menu')
 let win;
-
+// fn1();
 function createWindow () {
     win = new BrowserWindow({ width: 800, height: 600,webPreferences: {
         nodeIntegrationInWorker: true //支持多线程
     } })
 
-    win.loadFile('./index.html')
+    win.loadFile('index.html')
 
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     win.on('closed', () => {
         win = null
@@ -31,7 +32,7 @@ app.on('activate', () => {
   }
 })
 
-const template = [
+/* const template = [
     {
       label: '编辑1',
       submenu: [
@@ -118,5 +119,5 @@ if (process.platform === 'darwin') {
   }
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
-
+ */
   

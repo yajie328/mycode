@@ -59,6 +59,10 @@ export default [
 		component: UseTree
 	},
 	{
+		path: '/store',
+		component: ()=>import("../components/counter/counter.vue")
+	},
+	{
 		path:'*',
 		components:{
 			default:()=> import("../views/Err.vue"),
