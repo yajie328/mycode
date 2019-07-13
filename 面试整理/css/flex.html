@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <style>
+            .box1{
+                width:300px;
+                border:1px dotted red;
+                display: flex;
+                justify-content: space-around
+            }
+           
+        </style>
+        <div class="left">left</div>
+        <div class="center">center</div>
+        <div class="right">right</div>
+    </div>
+
+    <!-- 两端对齐 中间间隔相等 -->
+    <div class="box2">
+            <style>
+                .box2{
+                    margin-top:10px;
+                    width:300px;
+                    border:1px dotted red;
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0 10px;
+                }
+               
+            </style>
+            <div class="left">left</div>
+            <div class="center">center</div>
+            <div class="center">center</div>
+            <div class="right">right</div>
+        </div>
+        <!-- 均匀排列 间隔相等 -->
+        <div class="box3">
+                <style>
+                    .box3{
+                        margin-top:10px;
+                        width:300px;
+                        border:1px dotted red;
+                        display: flex;
+                        justify-content: space-evenly
+                    }
+                   
+                </style>
+                <div class="left">left</div>
+                <div class="center">center</div>
+                <div class="right">right</div>
+            </div>
+</body>
+</html>

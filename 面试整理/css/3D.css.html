@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS实现3D轮播图</title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+    .main {
+    	width: 900px;
+        height: 300px;
+        margin: 0 auto;
+        position: relative;
+        -webkit-perspective:700px;
+        perspective:700px;
+        perspective-origin: 70% 30%;
+        
+    }
+    .box {   
+        left: 350px;
+        top: 100px;
+        width: 200px;
+        height: 100px;
+        position: absolute;
+        transition: transform 1s;
+        -webkit-transition: -webkit-transform 1s;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        
+    }
+    img {
+        width: 200px;
+        height: 100px;
+        position: absolute;
+    }
+    img:nth-child(1) {transform:rotateY(0deg) translateZ(150px);}
+    img:nth-child(2) {transform:rotateY(90deg) translateZ(150px);}
+    img:nth-child(3) {transform:rotateY(180deg) translateZ(150px);}
+    img:nth-child(4) {transform:rotateY(270deg) translateZ(150px);}
+    </style>
+</head>
+
+<body>
+    <h3 align="center">人类进化史(点击切换)</h3>
+	<div class="main">
+        <div class="box" id="box">
+            <img src="img/img1.jpg">
+            <img src="img/img2.jpg">
+            <img src="img/img3.jpg">
+            <img src="img/img4.jpg">
+        </div>
+	</div>
+</body>
+<script src="js/carousel.js">         
+</script>
+
+</html>
