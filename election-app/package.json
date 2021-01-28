@@ -13,7 +13,7 @@
   "author": "daya",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^4.1.4",
+    "electron": "^9.4.0",
     "electron-connect": "^0.6.3",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.1.0"
